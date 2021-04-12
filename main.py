@@ -1,8 +1,6 @@
 import time
-
 import serial
 from pocketsphinx import LiveSpeech
-
 
 class VoiceArmController:
     def __init__(self, comport):
@@ -13,12 +11,10 @@ class VoiceArmController:
         self.ser.baudrate = 2400
         self.ser.port = comport
         self.ser.timeout = 10
-
+    
     #function wich wait when the keyword is said and after that call the write to arduino function
     def Listen(self):
         firstWord = []
-
-
         for phrase in self.speech:
             for word1 in firstWord:
                 for word2 in phrase.segments():
@@ -29,7 +25,7 @@ class VoiceArmController:
                     if word1 == 'light' and (word2 == 'out'):
                         self.writeToArduino('0')
             firstWord = phrase.segments()
-
+    
     #open Comport and sends a command to arduino
     def writeToArduino(self, data):
         try:
